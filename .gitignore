@@ -12,6 +12,9 @@
 /.next/
 /out/
 
+#PDF
+/static/images/IMG_5656.pdf
+
 # production
 /build
 
