@@ -1,11 +1,24 @@
 import React from 'react';
 import BaseLayout from '../components/layouts/BaseLayout';
-
-//Importing Bootstrap Element - Container, Row, Col from Reactstrap
+//Typed for auto typing text
+import Typed from 'react-typed';
+//Bootstrap Element - Container, Row, Col from Reactstrap
 import { Container, Row, Col } from 'reactstrap';
 
 //Calls everything what is included in SuperComponent
 class Index extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.roles = [
+			'My strings are: <i>strings</i> with',
+			'My strings are: <strong>HTML</strong>',
+			'Chars &times; &copy;',
+			'My strings are: <i>strings</i> with',
+			'My strings are: <strong>HTML</strong>',
+			'Chars &times; &copy;'
+		];
+	}
 	//Lifecycle function Render
 	render() {
 		return (
@@ -43,6 +56,17 @@ class Index extends React.Component {
 											Welcome to the portfolio website of Filip Jerga. Get informed, collaborate
 											and discover projects I was working on through the years!
 										</h1>
+										<Typed
+											loop
+											typeSpeed={70}
+											backSpeed={50}
+											strings={this.roles}
+											smartBackspace
+											backDelay={1000}
+											showCursor
+											cursorChar="|"
+											className="self-typed"
+										/>
 									</div>
 									<div className="display-welcome-bio">
 										<h1>Let's take a look on my work.</h1>
