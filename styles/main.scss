@@ -1,6 +1,11 @@
-//Importing our Partial File
+//Importing our Fonts File
 @import './shared/fonts';
+//Importing our Pages File
+@import './index';
+
 html,
 body {
+	height: 100%;
+	width: 100%;
 	font-family: 'Montserrat', 'Helvetica';
 }
