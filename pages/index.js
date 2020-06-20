@@ -4,6 +4,7 @@ import BaseLayout from '../components/layouts/BaseLayout';
 import Typed from 'react-typed';
 //Bootstrap Element - Container, Row, Col from Reactstrap
 import { Container, Row, Col } from 'reactstrap';
+import Particles from 'react-particles-js';
 
 //Calls everything what is included in SuperComponent
 class Index extends React.Component {
@@ -19,6 +20,7 @@ class Index extends React.Component {
 			'Chars &times; &copy;'
 		];
 	}
+
 	//Lifecycle function Render
 	render() {
 		return (
@@ -26,10 +28,30 @@ class Index extends React.Component {
 			<React.Fragment>
 				<BaseLayout className="cover">
 					<div className="main-section">
-						<div className="background-image">
+						{/* <div className="background-image">
 							<img src="/static/images/background.png" />
-						</div>
-
+						</div> */}
+						<Particles
+							className="particles"
+							params={{
+								particles: {
+									number: {
+										value: 100,
+										density: {
+											enable: true,
+											value_area: 1000
+										},
+										polygon: {
+											enable: true,
+											type: 'inside',
+											move: {
+												radius: 10
+											}
+										}
+									}
+								}
+							}}
+						/>
 						<Container>
 							<Row>
 								<Col md="6">
@@ -53,8 +75,10 @@ class Index extends React.Component {
 								<Col md="6" className="display-welcome-wrapper">
 									<div className="display-welcome-text">
 										<h1>
-											Welcome to the portfolio website of Filip Jerga. Get informed, collaborate
-											and discover projects I was working on through the years!
+											Fusce convallis accumsan erat sit amet ornare. Mauris in leo sed massa
+											dignissim ullamcorper. Pellentesque a maximus justo, sed maximus augue.
+											Curabitur eleifend massa sed imperdiet bibendum. Vivamus maximus dolor dui,
+											ac vestibulum nisi faucibus vitae. Etiam fermentum posuere mauris eu pretium
 										</h1>
 										<Typed
 											loop

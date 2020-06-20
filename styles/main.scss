@@ -2,6 +2,8 @@
 @import './shared/fonts';
 //Importing our Pages File
 @import './index';
+//Importing our NavBar File
+@import './navbar.scss';
 
 html,
 body {
@@ -15,4 +17,14 @@ body {
 	font-weight: bold;
 	letter-spacing: 2px;
 	color: #fff;
+}
+
+.absolute {
+	position: absolute;
+}
+
+.particles {
+	position: absolute;
+	width: 100%;
+	height: 100%;
 }
