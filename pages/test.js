@@ -9,6 +9,7 @@ class Test extends React.Component {
 	//getInitialProps a static async function(that can be called without initiazation) to render the content on server and client side
 	//Adding context object so we can get our query
 	static async getInitialProps({ query }) {
+		//Getting the id of our link, f.e /test/query.id and displaying it in testId
 		const testId = query.id;
 		return { testId };
 	}

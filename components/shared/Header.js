@@ -35,6 +35,7 @@ class Header extends React.Component {
 				<Link href="/foo">
 					<a>Foo</a>
 				</Link>
+				{/* Simple usage of routes and links */}
 				<NextLink route="test" params={{ id: '2' }}>
 					<a>Test 2</a>
 				</NextLink>

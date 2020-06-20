@@ -27,10 +27,10 @@ class Portfolios extends React.Component {
 
 	//A function to iterate(loop) between posts to display them all
 	renderPosts(posts) {
-		return posts.map((justOnePost) => {
+		return posts.map((justOnePost, index) => {
 			return (
-				//Adding an unique key for every single post
-				<li key={justOnePost.id}>
+				//Adding an unique key for every single post in our case its index of each iterated element
+				<li key={index}>
 					{/* Adding a link to the data independently and adding a query parameter to it */}
 					<Link as={`/portfolioDetail/${justOnePost.id}`} href="/portfolioDetail/[id]">
 						<a className="">{justOnePost.title}</a>
