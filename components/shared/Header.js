@@ -1,50 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { Link as NextLink } from '../../routes';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 
-class Header extends React.Component {
-	render() {
-		return (
-			<React.Fragment>
-				{/* Simple Navigation with Link */}
-				<Link href="/">
-					<a className="navigation_Home">Home</a>
-				</Link>
-				<Link href="/about">
-					<a className="navigation_About">About</a>
-				</Link>
-				<Link href="/portfolios">
-					<a>Portfolio</a>
-				</Link>
-				<Link href="/blogs">
-					<a>Blog</a>
-				</Link>
-				<Link href="/cv">
-					<a>CV</a>
-				</Link>
-				<Link href="/foo">
-					<a>Foo</a>
-				</Link>
-				{/* Simple usage of routes and links */}
-				<NextLink route="test" params={{ id: '2' }}>
-					<a>Test 2</a>
-				</NextLink>
-				<NextLink route="test" params={{ id: '5' }}>
-					<a>Test 5</a>
-				</NextLink>
-				{/* JSX Styling for a Component itself */}
-				<style jsx>
-					{`
-						a {
-							font-size: 20px;
-						}
-						.navigation_Home {
-							font-size: 30px;
-						}					
-					`}
-				</style>
-			</React.Fragment>
-		);
-	}
-}
-export default Header;
+//Basic Link Layout, that defines a route, and a title, and returns a JSX element of a Link with a Title
+const BsNavLink = (props) => {
+	const { route, title } = props;
+	return (
+		<Link href={route}>
+			<a className="nav-link">{title}</a>
+		</Link>
+	);
+};
+
+const Example = () => {
+	//Default Reactstrap toogle function which sets true or false depending on the onClick event
+	const [ isOpen, setIsOpen ] = useState(false);
+	const toggle = () => setIsOpen(!isOpen);
+
+	return (
+		<React.Fragment>
+			{/* Simple Colapsable Bootstrap Navbar which is set to expand on medium screens */}
+			<Navbar color="light" light expand="md">
+				{/* Title, Logo is placed here */}
+				<NavbarBrand href="/">Artiom Tofan</NavbarBrand>
+				{/* Toggler for the Navbar when it shows on the medium screen */}
+				<NavbarToggler onClick={toggle} />
+				<Collapse isOpen={isOpen} navbar>
+					{/* All the content to the Left */}
+					<Nav className="ml-auto" navbar>
+						<NavItem>
+							{/* Navlinks we defined in this component */}
+							<BsNavLink route="/" title="Home" />
+						</NavItem>
+						<NavItem>
+							<BsNavLink route="/about" title="About" />
+						</NavItem>
+						<NavItem>
+							<BsNavLink route="/portfolios" title="Portfolio" />
+						</NavItem>
+						<NavItem>
+							<BsNavLink route="/blogs" title="Blog" />
+						</NavItem>
+						<NavItem>
+							<BsNavLink route="/cv" title="CV" />
+						</NavItem>
+					</Nav>
+				</Collapse>
+			</Navbar>
+		</React.Fragment>
+	);
+};
+
+export default Example;
