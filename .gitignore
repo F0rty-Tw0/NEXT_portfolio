@@ -4,6 +4,9 @@
 /node_modules
 /.pnp
 .pnp.js
+/
+#PDF
+/
 
 # testing
 /coverage
@@ -13,7 +16,8 @@
 /out/
 
 #PDF
-/static/images/IMG_5656.pdf
+static/images/IMG_5656.psd
+static/images/IMG_5656.jpg
 
 # production
 /build

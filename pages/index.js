@@ -4,6 +4,7 @@ import BaseLayout from '../components/layouts/BaseLayout';
 import Typed from 'react-typed';
 //Bootstrap Element - Container, Row, Col from Reactstrap
 import { Container, Row, Col } from 'reactstrap';
+//React Particles are not that costumizable, have to think switching to https://github.com/matteobruni/tsparticles
 import Particles from 'react-particles-js';
 
 //Calls everything what is included in SuperComponent
@@ -28,25 +29,30 @@ class Index extends React.Component {
 			<React.Fragment>
 				<BaseLayout className="cover">
 					<div className="main-section">
-						{/* <div className="background-image">
-							<img src="/static/images/background.png" />
-						</div> */}
+						{/* Particles effect on the background */}
 						<Particles
-							className="particles"
+							id="particles"
 							params={{
 								particles: {
 									number: {
-										value: 100,
-										density: {
+										value: 100
+									},
+									size: {
+										value: 3
+									}
+								},
+								interactivity: {
+									events: {
+										onhover: {
 											enable: true,
-											value_area: 1000
-										},
-										polygon: {
-											enable: true,
-											type: 'inside',
-											move: {
-												radius: 10
-											}
+											mode: 'bubble'
+										}
+									},
+									modes: {
+										bubble: {
+											opacity: 0.1,
+											distance: 100,
+											duration: 2
 										}
 									}
 								}
@@ -64,10 +70,20 @@ class Index extends React.Component {
 														Have a look at my portfolio and job history.
 													</div>
 												</div>
-												<img className="image" src="/static/images/display-1.png" />
-												<div className="shadow-custom">
-													<div className="shadow-inner"> </div>
-												</div>
+												<img className="image shadowed" src="/static/images/display-1.png" />
+												{/* Shadow for PNG image */}
+												<svg height="0" width="0">
+													<filter id="drop-shadow">
+														<feGaussianBlur in="SourceAlpha" stdDeviation="2.2" />
+														<feOffset dx="-15" dy="1" result="offsetblur" />
+														<feFlood floodColor="rgba(38, 113, 129, 0.7)" />
+														<feComposite in2="offsetblur" operator="in" />
+														<feMerge>
+															<feMergeNode />
+															<feMergeNode in="SourceGraphic" />
+														</feMerge>
+													</filter>
+												</svg>
 											</div>
 										</div>
 									</div>
