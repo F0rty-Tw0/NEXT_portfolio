@@ -1,10 +1,10 @@
 import React from 'react';
 import BaseLayout from '../components/layouts/BaseLayout';
-//Typed for auto typing text
+//Typed for auto typing text (https://github.com/mattboldt/typed.js)
 import Typed from 'react-typed';
 //Bootstrap Element - Container, Row, Col from Reactstrap
 import { Container, Row, Col } from 'reactstrap';
-//React Particles are not that costumizable, have to think switching to https://github.com/matteobruni/tsparticles
+//React Particles (https://github.com/Wufe/react-particles-js) are not that costumizable, have to think switching to https://github.com/matteobruni/tsparticles
 import Particles from 'react-particles-js';
 
 //Calls everything what is included in SuperComponent

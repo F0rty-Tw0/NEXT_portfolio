@@ -1,5 +1,6 @@
 import React from 'react';
 import BaseLayout from '../components/layouts/BaseLayout';
+import BasePage from '../components/BasePage';
 import Link from 'next/link';
 //Duplicating the axios use from the Index, its better to have it somewhere centralized where we can use it
 import axios from 'axios';
@@ -47,9 +48,11 @@ class Portfolios extends React.Component {
 		const { posts } = this.props;
 		return (
 			<BaseLayout>
-				<h1 className="title"> This is a Portfolios page(Class Component)</h1>
-				{/* Getting the value from posts */}
-				<ul>{this.renderPosts(posts)}</ul>
+				<BasePage>
+					<h1 className="title"> This is a Portfolios page(Class Component)</h1>
+					{/* Getting the value from posts */}
+					<ul>{this.renderPosts(posts)}</ul>
+				</BasePage>
 			</BaseLayout>
 		);
 	}

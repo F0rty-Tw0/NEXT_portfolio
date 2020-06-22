@@ -1,5 +1,6 @@
 import React from 'react';
 import BaseLayout from '../../components/layouts/BaseLayout';
+import BasePage from '../../components/BasePage';
 //Importing router to use fetched Data from other Component
 import { withRouter } from 'next/router';
 //Duplicating the axios use from the Index, its better to have it somewhere centralized where we can use it
@@ -37,8 +38,10 @@ class PortfolioDetail extends React.Component {
 		console.log(post);
 		return (
 			<BaseLayout>
+			<BasePage>
 				<h1 className="title">{post.title}</h1>
 				<h2>{post.body}</h2>
+			</BasePage>
 			</BaseLayout>
 		);
 	}

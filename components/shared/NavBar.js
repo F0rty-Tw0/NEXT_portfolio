@@ -12,6 +12,15 @@ const BsNavLink = (props) => {
 	);
 };
 
+//Login Button layout
+const Login = () => {
+	return <span className="nav-link port-navbar-link clickable">Login</span>;
+};
+//Logout Button layout
+const Logout = () => {
+	return <span className="nav-link port-navbar-link clickable">Logout</span>;
+};
+
 const NavBar = () => {
 	//Default Reactstrap toogle function which sets true or false depending on the onClick event
 	const [ isOpen, setIsOpen ] = useState(false);
@@ -45,6 +54,12 @@ const NavBar = () => {
 						</NavItem>
 						<NavItem className="port-navbar-item">
 							<BsNavLink route="/cv" title="CV" />
+						</NavItem>
+						<NavItem className="port-navbar-item">
+							<Login />
+						</NavItem>
+						<NavItem className="port-navbar-item">
+							<Logout />
 						</NavItem>
 					</Nav>
 				</Collapse>

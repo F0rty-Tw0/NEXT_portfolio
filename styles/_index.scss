@@ -46,11 +46,11 @@
 	position: relative;
 
 	&-content {
+		z-index: 1;
 		position: absolute;
 		bottom: 0px;
 		width: 360px;
 		left: 6%;
-		z-index: 1;
 
 		&-intro {
 			font-size: 17px;
