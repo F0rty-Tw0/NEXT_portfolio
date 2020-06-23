@@ -37,7 +37,7 @@ const NavBar = (props) => {
 	const [ isOpen, setIsOpen ] = useState(false);
 	const toggle = () => setIsOpen(!isOpen);
 
-	const { isAuthenticated } = props;
+	const { isAuthenticated, user } = props;
 	return (
 		<React.Fragment>
 			{/* Simple Colapsable Bootstrap Navbar which is set to expand on medium screens */}
@@ -77,6 +77,12 @@ const NavBar = (props) => {
 						{isAuthenticated && (
 							<NavItem className="port-navbar-item">
 								<Logout />
+							</NavItem>
+						)}
+
+						{isAuthenticated && (
+							<NavItem className="port-navbar-item">
+								<span className="nav-link port-navbar-link">{user.given_name}</span>
 							</NavItem>
 						)}
 					</Nav>

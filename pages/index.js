@@ -12,6 +12,7 @@ class Index extends React.Component {
 	constructor(props) {
 		super(props);
 
+		//Text for Typed.js
 		this.roles = [
 			'My strings are: <i>strings</i> with',
 			'My strings are: <strong>HTML</strong>',
@@ -24,6 +25,7 @@ class Index extends React.Component {
 
 	//Lifecycle function Render
 	render() {
+		const { isAuthenticated, user } = this.props.auth;
 		return (
 			//React.Fragment is used instead of <div /> to hide it from source
 			<React.Fragment>
@@ -91,6 +93,12 @@ class Index extends React.Component {
 								<Col md="6" className="display-welcome-wrapper">
 									<div className="display-welcome-text">
 										<h1>
+											{/* If authenticated then displaying the user name */}
+											{isAuthenticated && (
+												<span>
+													<b>{user.given_name} </b>
+												</span>
+											)}
 											Fusce convallis accumsan erat sit amet ornare. Mauris in leo sed massa
 											dignissim ullamcorper. Pellentesque a maximus justo, sed maximus augue.
 											Curabitur eleifend massa sed imperdiet bibendum. Vivamus maximus dolor dui,

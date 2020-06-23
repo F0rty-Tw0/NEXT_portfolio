@@ -21,6 +21,7 @@ export default class MyApp extends App {
 
 		// Checking the Authentication of user, and doing for better syntax a double negation on user to make it true
 		const auth = { user, isAuthenticated: !!user };
+	
 		// let isAuthenticated = false;
 		// if (user) {
 		// 	isAuthenticated = true;

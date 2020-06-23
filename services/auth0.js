@@ -1,6 +1,7 @@
 import auth0 from 'auth0-js';
 import Cookies from 'js-cookie';
 import jwt from 'jsonwebtoken';
+
 class Auth0 {
 	//Creating a constructor to intialize this steps
 	constructor() {
@@ -33,7 +34,6 @@ class Auth0 {
 	}
 
 	setSession(authResult) {
-		debugger;
 		//Set the time that the Access Token will expire at
 		const expiresAt = JSON.stringify(authResult.expiresIn * 1000 + new Date().getTime());
 		// localStorage.setItem('access_token', authResult.accessToken);
