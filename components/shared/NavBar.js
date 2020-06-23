@@ -24,7 +24,11 @@ const Login = () => {
 };
 //Logout Button layout
 const Logout = () => {
-	return <span className="nav-link port-navbar-link clickable">Logout</span>;
+	return (
+		<span onClick={auth0.logout} className="nav-link port-navbar-link clickable">
+			Logout
+		</span>
+	);
 };
 
 const NavBar = () => {
@@ -42,7 +46,7 @@ const NavBar = () => {
 				</NavbarBrand>
 				{/* Toggler for the Navbar when it shows on the medium screen */}
 				<NavbarToggler onClick={toggle} />
-				<Collapse isOpen={isOpen} navbar>
+				<Collapse isOpen={isOpen} navbar className="float-right">
 					{/* All the content to the Left */}
 					<Nav className="ml-auto" navbar>
 						<NavItem className="port-navbar-item">
@@ -61,12 +65,18 @@ const NavBar = () => {
 						<NavItem className="port-navbar-item">
 							<BsNavLink route="/cv" title="CV" />
 						</NavItem>
-						<NavItem className="port-navbar-item">
-							<Login />
-						</NavItem>
-						<NavItem className="port-navbar-item">
-							<Logout />
-						</NavItem>
+						{/* Checking if the user is uthenticated, if not the login button is shown */}
+						{!auth0.isAuthenticated() && (
+							<NavItem className="port-navbar-item">
+								<Login />
+							</NavItem>
+						)}
+						{/* Checking if the user is uthenticated, if yes the Logout button is shown */}
+						{auth0.isAuthenticated() && (
+							<NavItem className="port-navbar-item">
+								<Logout />
+							</NavItem>
+						)}
 					</Nav>
 				</Collapse>
 			</Navbar>
