@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } from 'reactstrap';
 
+import auth0 from '../../services/auth0';
+
 //Basic Link Layout, that defines a route, and a title, and returns a JSX element of a Link with a Title
 const BsNavLink = (props) => {
 	const { route, title } = props;
@@ -14,7 +16,11 @@ const BsNavLink = (props) => {
 
 //Login Button layout
 const Login = () => {
-	return <span className="nav-link port-navbar-link clickable">Login</span>;
+	return (
+		<span onClick={auth0.login} className="nav-link port-navbar-link clickable">
+			Login
+		</span>
+	);
 };
 //Logout Button layout
 const Logout = () => {

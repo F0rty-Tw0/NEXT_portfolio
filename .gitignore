@@ -5,8 +5,9 @@
 /.pnp
 .pnp.js
 /
-#PDF
-/
+
+# Auth0
+services/auth_config.json
 
 # testing
 /coverage
@@ -15,7 +16,7 @@
 /.next/
 /out/
 
-#PDF
+#PSD
 static/images/IMG_5656.psd
 static/images/IMG_5656.jpg
 
