@@ -1,5 +1,5 @@
 import App from 'next/app';
-
+import auth0 from '../services/auth0';
 //Bootstrap CSS (this is first)
 import 'bootstrap/dist/css/bootstrap.min.css';
 //Styling CSS (this is 2nd so it overrides Bootstrap CSS and we don't need !important)
@@ -9,12 +9,13 @@ export default class MyApp extends App {
 	static async getInitialProps({ Component, router, ctx }) {
 		let pageProps = {};
 		//Ternary operator to check if the process is in browser then send client auth or server auth
-		const isAuthenticated = process.browser ? 'clientAuth()' : 'serverAuth()';
+		const isAuthenticated = process.browser ? auth0.clientAuth() : auth0.serverAuth(ctx.req);
+		console.log(isAuthenticated);
 		// let isAuthenticated;
 		// if (process.browser) {
-		// 	isAuthenticated = 'clientAuth()';
+		// 	isAuthenticated = auth0.clientAuth();
 		// } else {
-		// 	isAuthenticated = 'serverAuth()';
+		// 	isAuthenticated = auth0.serverAuth(ctx.req);
 		// }
 
 		if (Component.getInitialProps) {

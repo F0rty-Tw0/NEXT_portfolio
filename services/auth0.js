@@ -64,11 +64,46 @@ class Auth0 {
 		});
 	}
 
+	//Authentication checker middleware
 	isAuthenticated() {
 		//Check whether the current time is past the
 		//Access Token's expire time
 		const expiresAt = Cookies.getJSON('expiresAt');
 		return new Date().getTime() < expiresAt;
+	}
+
+	//Authenticaton on ClientSide
+	clientAuth() {
+		return this.isAuthenticated();
+	}
+
+	//Authenticaton on ServerSide, adding request which is located in ctx, which can allow us to get cookies from the server request object
+	serverAuth(req) {
+		//Checking for the cookies
+		if (req.headers.cookie) {
+			//Spliting cookies string with semicolons (;), we search for a string that start with expiresAt=
+			const expiresAtCookie = req.headers.cookie.split(';').find((c) => c.trim().startsWith('expiresAt='));
+
+			// //Logging the cookies
+			// const cookies = req.headers.cookie;
+			// console.log(cookies);
+			// const splitedCookies = cookies.split(';');
+			// console.log(splitedCookies);
+			// const expiresAtCookies = splitedCookies.find((c) => c.trim().startsWith('expiresAt='));
+			// console.log(expiresAtCookies);
+			// const expiresAtArray = expiresAtCookie.split('=');
+			// console.log(expiresAtArray);
+			// const expiresAtDate = expiresAtArray[1];
+			// console.log(expiresAtDate);
+
+			//Checking if we don't have expiresAtCookie then we returning undefined
+			if (!expiresAtCookie) {
+				return undefined;
+			}
+			//Getting expiresAt which will be a date, we want to split by equal sign, we will get an array with a second elemnt a date
+			const expiresAt = expiresAtCookie.split('=')[1];
+			return new Date().getTime() < expiresAt;
+		}
 	}
 }
 //Creating an instance of this Class
