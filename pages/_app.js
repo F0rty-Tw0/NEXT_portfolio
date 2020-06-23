@@ -4,13 +4,14 @@ import auth0 from '../services/auth0';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //Styling CSS (this is 2nd so it overrides Bootstrap CSS and we don't need !important)
 import './../styles/main.scss';
+import { Authentication } from 'auth0-js';
 
 export default class MyApp extends App {
 	static async getInitialProps({ Component, router, ctx }) {
 		let pageProps = {};
 		//Ternary operator to check if the process is in browser then send client auth or server auth
-		const isAuthenticated = process.browser ? auth0.clientAuth() : auth0.serverAuth(ctx.req);
-		console.log(isAuthenticated);
+		const user = process.browser ? auth0.clientAuth() : auth0.serverAuth(ctx.req);
+
 		// let isAuthenticated;
 		// if (process.browser) {
 		// 	isAuthenticated = auth0.clientAuth();
@@ -18,15 +19,21 @@ export default class MyApp extends App {
 		// 	isAuthenticated = auth0.serverAuth(ctx.req);
 		// }
 
+		// Checking the Authentication of user, and doing for better syntax a double negation on user to make it true
+		const auth = { user, isAuthenticated: !!user };
+		// let isAuthenticated = false;
+		// if (user) {
+		// 	isAuthenticated = true;
+		// }
 		if (Component.getInitialProps) {
 			pageProps = await Component.getInitialProps(ctx);
 		}
-		return { pageProps };
+		return { pageProps, auth };
 	}
 	render() {
-		const { Component, pageProps } = this.props;
+		const { Component, pageProps, auth } = this.props;
 		return (
-			<Component {...pageProps}>
+			<Component {...pageProps} auth={auth}>
 				<meta
 					name="viewport"
 					content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"

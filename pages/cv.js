@@ -7,7 +7,7 @@ class CV extends React.Component {
 		return (
 			<React.Fragment>
 				{/* Base Layout - Shared component which has Header */}
-				<BaseLayout>
+				<BaseLayout {...this.props.auth}>
 					<BasePage>
 						<h1 className="title"> This is a CV page</h1>
 					</BasePage>

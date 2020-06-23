@@ -18,7 +18,7 @@ class Test extends React.Component {
 	render() {
 		const { testId } = this.props;
 		return (
-			<BaseLayout>
+			<BaseLayout {...this.props.auth}>
 				<BasePage>
 					<h1 className="title">I am Test Page of {testId}</h1>
 				</BasePage>

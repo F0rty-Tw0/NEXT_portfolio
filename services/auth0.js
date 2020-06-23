@@ -1,6 +1,6 @@
 import auth0 from 'auth0-js';
 import Cookies from 'js-cookie';
-
+import jwt from 'jsonwebtoken';
 class Auth0 {
 	//Creating a constructor to intialize this steps
 	constructor() {
@@ -17,7 +17,6 @@ class Auth0 {
 		this.login = this.login.bind(this);
 		this.logout = this.logout.bind(this);
 		this.handleAuthentication = this.handleAuthentication.bind(this);
-		this.isAuthenticated = this.isAuthenticated.bind(this);
 	}
 	handleAuthentication() {
 		return new Promise((resolve, reject) => {
@@ -64,25 +63,32 @@ class Auth0 {
 		});
 	}
 
-	//Authentication checker middleware
-	isAuthenticated() {
-		//Check whether the current time is past the
-		//Access Token's expire time
-		const expiresAt = Cookies.getJSON('expiresAt');
-		return new Date().getTime() < expiresAt;
+	//Better Token authentication for client side (more secure)
+	verfiyToken(token) {
+		if (token) {
+			//This will decode our token with jwt
+			const decodedToken = jwt.decode(token);
+			//This is the experation time
+			const expiresAt = decodedToken.exp * 1000;
+			//We check if we have decodedToken and our new date is less than expiresAt, then we return a decodedToken otherwise undefined
+			return decodedToken && new Date().getTime() < expiresAt ? decodedToken : undefined;
+		}
+		return undefined;
 	}
 
 	//Authenticaton on ClientSide
 	clientAuth() {
-		return this.isAuthenticated();
+		const token = Cookies.getJSON('jwt');
+		const verifedToken = this.verfiyToken(token);
+		return token;
 	}
 
 	//Authenticaton on ServerSide, adding request which is located in ctx, which can allow us to get cookies from the server request object
 	serverAuth(req) {
 		//Checking for the cookies
 		if (req.headers.cookie) {
-			//Spliting cookies string with semicolons (;), we search for a string that start with expiresAt=
-			const expiresAtCookie = req.headers.cookie.split(';').find((c) => c.trim().startsWith('expiresAt='));
+			//Spliting cookies string with semicolons (;), we search for a string that start with jwt=
+			const tokenCookie = req.headers.cookie.split(';').find((c) => c.trim().startsWith('jwt='));
 
 			// //Logging the cookies
 			// const cookies = req.headers.cookie;
@@ -97,13 +103,15 @@ class Auth0 {
 			// console.log(expiresAtDate);
 
 			//Checking if we don't have expiresAtCookie then we returning undefined
-			if (!expiresAtCookie) {
+			if (!tokenCookie) {
 				return undefined;
 			}
-			//Getting expiresAt which will be a date, we want to split by equal sign, we will get an array with a second elemnt a date
-			const expiresAt = expiresAtCookie.split('=')[1];
-			return new Date().getTime() < expiresAt;
+			//Getting a token which will be a date, we want to split by equal sign, we will get an array with a second elemnt a date
+			const token = tokenCookie.split('=')[1];
+			const verifiedToken = this.verfiyToken(token);
+			return verifiedToken;
 		}
+		return undefined;
 	}
 }
 //Creating an instance of this Class

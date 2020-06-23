@@ -22,6 +22,7 @@ const Login = () => {
 		</span>
 	);
 };
+
 //Logout Button layout
 const Logout = () => {
 	return (
@@ -31,11 +32,12 @@ const Logout = () => {
 	);
 };
 
-const NavBar = () => {
+const NavBar = (props) => {
 	//Default Reactstrap toogle function which sets true or false depending on the onClick event
 	const [ isOpen, setIsOpen ] = useState(false);
 	const toggle = () => setIsOpen(!isOpen);
 
+	const { isAuthenticated } = props;
 	return (
 		<React.Fragment>
 			{/* Simple Colapsable Bootstrap Navbar which is set to expand on medium screens */}
@@ -66,13 +68,13 @@ const NavBar = () => {
 							<BsNavLink route="/cv" title="CV" />
 						</NavItem>
 						{/* Checking if the user is uthenticated, if not the login button is shown */}
-						{!auth0.isAuthenticated() && (
+						{!isAuthenticated && (
 							<NavItem className="port-navbar-item">
 								<Login />
 							</NavItem>
 						)}
 						{/* Checking if the user is uthenticated, if yes the Logout button is shown */}
-						{auth0.isAuthenticated() && (
+						{isAuthenticated && (
 							<NavItem className="port-navbar-item">
 								<Logout />
 							</NavItem>

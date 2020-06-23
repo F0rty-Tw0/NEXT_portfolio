@@ -47,7 +47,7 @@ class Portfolios extends React.Component {
 		//Getting destructurized posts from props
 		const { posts } = this.props;
 		return (
-			<BaseLayout>
+			<BaseLayout {...this.props.auth}>
 				<BasePage>
 					<h1 className="title"> This is a Portfolios page(Class Component)</h1>
 					{/* Getting the value from posts */}

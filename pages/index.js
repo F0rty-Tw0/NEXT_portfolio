@@ -27,7 +27,7 @@ class Index extends React.Component {
 		return (
 			//React.Fragment is used instead of <div /> to hide it from source
 			<React.Fragment>
-				<BaseLayout className="cover">
+				<BaseLayout {...this.props.auth} className="cover">
 					<div className="main-section">
 						{/* Particles effect on the background */}
 						<Particles
