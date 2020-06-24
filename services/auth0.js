@@ -63,35 +63,40 @@ class Auth0 {
 			clientID: '9A3Dcg4b9NJZQ1GfqpsOpp9iQny1JHy0'
 		});
 	}
+
 	async getJWKS() {
 		//Sinding the synchronized request to our domain
-		const res = axios.get('https://dev-74smgeq4.eu.auth0.com/.well-known/jwks.json');
+		const res = await axios.get('https://dev-74smgeq4.eu.auth0.com/.well-known/jwks.json');
 		//Extacting it from response
-		const jwks = await res.data;
+		const jwks = res.data;
 		return jwks;
 	}
+
 	//Better Token authentication for client side (more secure)
 	async verfiyToken(token) {
 		if (token) {
 			//This will decode our token with jwt
 			const decodedToken = jwt.decode(token, { complete: true });
-
 			const jwks = await this.getJWKS();
 			const jwk = jwks.keys[0];
+
 			//Building the Certificate
 			//Accessing first property of x5c
 			let cert = jwk.x5c[0];
+			console.log(cert);
+			//Matching our certificate wtih the regex first 64 caracters and adding (join) a new line to them
 			cert = cert.match(/.{1,64}/g).join('\n');
-			cert = `-----BEGIN CERTIFICATE-----\n${cert}-----END CERTIFICATE-----\n`;
+			//Adding -----this----- strings to begining of the certificate and to the end of certificate
+			cert = `-----BEGIN CERTIFICATE-----\n${cert}\n-----END CERTIFICATE-----\n`;
 			//Comparing the kid property of our token and public key that we are getting from cert key
 			if (jwk.kid === decodedToken.header.kid) {
 				try {
 					//Verifying our token
 					const verifiedToken = jwt.verify(token, cert);
 					//This is the experation time
-					const expiresAt = decodedToken.exp * 1000;
+					const expiresAt = verifiedToken.exp * 1000;
 					//We check if we have decodedToken and our new date is less than expiresAt, then we return a decodedToken otherwise undefined
-					return decodedToken && new Date().getTime() < expiresAt ? verifiedToken : undefined;
+					return verifiedToken && new Date().getTime() < expiresAt ? verifiedToken : undefined;
 				} catch (err) {
 					return undefined;
 				}
@@ -101,14 +106,15 @@ class Auth0 {
 	}
 
 	//Authenticaton on ClientSide
-	clientAuth() {
+	async clientAuth() {
 		const token = Cookies.getJSON('jwt');
-		const verifedToken = this.verfiyToken(token);
-		return token;
+		//Because getJWKS uses async, we use here async too
+		const verifedToken = await this.verfiyToken(token);
+		return verifedToken;
 	}
 
 	//Authenticaton on ServerSide, adding request which is located in ctx, which can allow us to get cookies from the server request object
-	serverAuth(req) {
+	async serverAuth(req) {
 		//Checking for the cookies
 		if (req.headers.cookie) {
 			//Spliting cookies string with semicolons (;), we search for a string that start with jwt=
@@ -132,7 +138,7 @@ class Auth0 {
 			}
 			//Getting a token which will be a date, we want to split by equal sign, we will get an array with a second elemnt a date
 			const token = tokenCookie.split('=')[1];
-			const verifiedToken = this.verfiyToken(token);
+			const verifiedToken = await this.verfiyToken(token);
 			return verifiedToken;
 		}
 		return undefined;

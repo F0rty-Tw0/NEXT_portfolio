@@ -10,13 +10,13 @@ export default class MyApp extends App {
 	static async getInitialProps({ Component, router, ctx }) {
 		let pageProps = {};
 		//Ternary operator to check if the process is in browser then send client auth or server auth
-		const user = process.browser ? auth0.clientAuth() : auth0.serverAuth(ctx.req);
+		const user = process.browser ? await auth0.clientAuth() : await auth0.serverAuth(ctx.req);
 
 		// let isAuthenticated;
 		// if (process.browser) {
-		// 	isAuthenticated = auth0.clientAuth();
+		// 	isAuthenticated = await auth0.clientAuth();
 		// } else {
-		// 	isAuthenticated = auth0.serverAuth(ctx.req);
+		// 	isAuthenticated = await auth0.serverAuth(ctx.req);
 		// }
 
 		// Checking the Authentication of user, and doing for better syntax a double negation on user to make it true
