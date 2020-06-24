@@ -1,6 +1,7 @@
 import auth0 from 'auth0-js';
 import Cookies from 'js-cookie';
 import jwt from 'jsonwebtoken';
+import axios from 'axios';
 
 class Auth0 {
 	//Creating a constructor to intialize this steps
@@ -62,16 +63,39 @@ class Auth0 {
 			clientID: '9A3Dcg4b9NJZQ1GfqpsOpp9iQny1JHy0'
 		});
 	}
-
+	async getJWKS() {
+		//Sinding the synchronized request to our domain
+		const res = axios.get('https://dev-74smgeq4.eu.auth0.com/.well-known/jwks.json');
+		//Extacting it from response
+		const jwks = await res.data;
+		return jwks;
+	}
 	//Better Token authentication for client side (more secure)
-	verfiyToken(token) {
+	async verfiyToken(token) {
 		if (token) {
 			//This will decode our token with jwt
-			const decodedToken = jwt.decode(token);
-			//This is the experation time
-			const expiresAt = decodedToken.exp * 1000;
-			//We check if we have decodedToken and our new date is less than expiresAt, then we return a decodedToken otherwise undefined
-			return decodedToken && new Date().getTime() < expiresAt ? decodedToken : undefined;
+			const decodedToken = jwt.decode(token, { complete: true });
+
+			const jwks = await this.getJWKS();
+			const jwk = jwks.keys[0];
+			//Building the Certificate
+			//Accessing first property of x5c
+			let cert = jwk.x5c[0];
+			cert = cert.match(/.{1,64}/g).join('\n');
+			cert = `-----BEGIN CERTIFICATE-----\n${cert}-----END CERTIFICATE-----\n`;
+			//Comparing the kid property of our token and public key that we are getting from cert key
+			if (jwk.kid === decodedToken.header.kid) {
+				try {
+					//Verifying our token
+					const verifiedToken = jwt.verify(token, cert);
+					//This is the experation time
+					const expiresAt = decodedToken.exp * 1000;
+					//We check if we have decodedToken and our new date is less than expiresAt, then we return a decodedToken otherwise undefined
+					return decodedToken && new Date().getTime() < expiresAt ? verifiedToken : undefined;
+				} catch (err) {
+					return undefined;
+				}
+			}
 		}
 		return undefined;
 	}
