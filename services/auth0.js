@@ -2,6 +2,7 @@ import auth0 from 'auth0-js';
 import Cookies from 'js-cookie';
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
+import { decode } from 'punycode';
 
 class Auth0 {
 	//Creating a constructor to intialize this steps
@@ -77,6 +78,10 @@ class Auth0 {
 		if (token) {
 			//This will decode our token with jwt
 			const decodedToken = jwt.decode(token, { complete: true });
+			//Checking if there is no decoding token, we return undefined
+			if (!decodedToken) {
+				return undefined;
+			}
 			const jwks = await this.getJWKS();
 			const jwk = jwks.keys[0];
 
