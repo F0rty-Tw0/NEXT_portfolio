@@ -88,7 +88,6 @@ class Auth0 {
 			//Building the Certificate
 			//Accessing first property of x5c
 			let cert = jwk.x5c[0];
-			console.log(cert);
 			//Matching our certificate wtih the regex first 64 caracters and adding (join) a new line to them
 			cert = cert.match(/.{1,64}/g).join('\n');
 			//Adding -----this----- strings to begining of the certificate and to the end of certificate
