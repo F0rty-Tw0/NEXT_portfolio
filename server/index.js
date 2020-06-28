@@ -1,8 +1,11 @@
-const { createServer } = require('http');
-const { parse } = require('url');
+// const { createServer } = require('http');
+// const { parse } = require('url');
 const next = require('next');
 const routes = require('../routes');
 const express = require('express');
+
+//Service
+const authService = require('./services/auth');
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -43,12 +46,16 @@ app
 	.prepare()
 	.then(() => {
 		const server = express();
-		server.get('/api/v1/secret', (req, res) => {
+
+		//Route Handler with Middleware
+		server.get('/api/v1/secret', authService.checkJWT, (req, res) => {
 			return res.json(secretData);
 		});
+
 		server.get('*', (req, res) => {
 			return handle(req, res);
 		});
+
 		server.use(handle).listen(3000, (err) => {
 			if (err) throw err;
 			console.log('> Ready on http://localhost:3000');
