@@ -3,25 +3,31 @@ import BaseLayout from '../components/layouts/BaseLayout';
 import BasePage from '../components/BasePage';
 import withAuth from '../components/highOrderComponents/withAuth';
 
-import { getSecretData } from '../actions';
+import { getSecretData, getSecretDataServer } from '../actions';
 
 class Secret extends React.Component {
 	//Passing initial props to show a value
-	static getInitialProps() {
-		const superSecretValue = 'Super Secret Value';
-		return { superSecretValue };
+	async getInitialProps({ req }) {
+		//Checking if we are in a browser then getting secretData, if not secretDataServer
+		const anotherSecretData = await getSecretData(req);
+		console.log(anotherSecretData);
+		return { anotherSecretData };
 	}
 
 	//Setting our initial value of secretData
-	constructor(props) {
-		super();
-		this.state = {
-			secretData: []
-		};
-	}
+	state = {
+		secretData: []
+	};
+	// constructor(props) {
+	// 	super();
+	// 	this.state = {
+	// 		secretData: []
+	// 	};
+	// }
 
 	//Importing "secret" data from the API
 	async componentDidMount() {
+		//Using getSecretData functions from /actions to check for jwt token
 		const secretData = await getSecretData();
 
 		//Asigning a state to secretData

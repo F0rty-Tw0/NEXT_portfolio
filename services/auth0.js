@@ -2,7 +2,7 @@ import auth0 from 'auth0-js';
 import Cookies from 'js-cookie';
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
-import { decode } from 'punycode';
+import { getCookieFromReq } from '../helpers/utils';
 
 class Auth0 {
 	//Creating a constructor to intialize this steps
@@ -121,9 +121,6 @@ class Auth0 {
 	async serverAuth(req) {
 		//Checking for the cookies
 		if (req.headers.cookie) {
-			//Spliting cookies string with semicolons (;), we search for a string that start with jwt=
-			const tokenCookie = req.headers.cookie.split(';').find((c) => c.trim().startsWith('jwt='));
-
 			// //Logging the cookies
 			// const cookies = req.headers.cookie;
 			// console.log(cookies);
@@ -136,12 +133,8 @@ class Auth0 {
 			// const expiresAtDate = expiresAtArray[1];
 			// console.log(expiresAtDate);
 
-			//Checking if we don't have expiresAtCookie then we returning undefined
-			if (!tokenCookie) {
-				return undefined;
-			}
-			//Getting a token which will be a date, we want to split by equal sign, we will get an array with a second elemnt a date
-			const token = tokenCookie.split('=')[1];
+			//Getting a token which will be a date, we want to split by equal sign, we will get an array with a second elemnt a date from helpers/utils.js
+			const token = getCookieFromReq(req, 'jwt');
 			const verifiedToken = await this.verfiyToken(token);
 			return verifiedToken;
 		}
