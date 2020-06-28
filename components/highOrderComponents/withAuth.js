@@ -2,10 +2,13 @@ import React from 'react';
 import BaseLayout from '../layouts/BaseLayout';
 import BasePage from '../BasePage';
 
-//Creating a function with Component (our page) as argument
-export default function(Component) {
+//Our webpage
+const namespace = 'http://127.0.0.1:3000/';
+
+//Creating a function with Component (our page) as argument and imported role
+export default (role) => (Component) =>
 	//Returning withAtuh Component
-	return class withAuth extends React.Component {
+	class withAuth extends React.Component {
 		//Asigning getInitialProps because it might be used from other components that are runing within withAuth
 		static async getInitialProps(args) {
 			//Checking if our Component has a function getInitialProps, if it has we execute it
@@ -14,10 +17,24 @@ export default function(Component) {
 		}
 		//A function to check if we are authenticated then return a secret page, otherwise other page
 		renderSecretPage() {
-			const { isAuthenticated } = this.props.auth;
-			if (isAuthenticated) {
-				return <Component {...this.props} />;
+			//From props we get isAuthenticated and user
+			const { isAuthenticated, user } = this.props.auth;
+			//Checking if we have an user on ourpage/role
+			const userRole = user && user[`${namespace}role`];
+			let isAuthorized = false;
+
+			//If we don't have a role, we expect our user to be authorized
+			if (role) {
+				//If user role is same as role then we assign the authorization to true
+				if (userRole && userRole === role) {
+					isAuthorized = true;
+				}
+				//else assign the authorization to true
 			} else {
+				isAuthorized = true;
+			}
+			//Not authenticated message
+			if (!isAuthenticated) {
 				return (
 					<React.Fragment>
 						{/* Base Layout - Shared component which has Header */}
@@ -28,6 +45,20 @@ export default function(Component) {
 						</BaseLayout>
 					</React.Fragment>
 				);
+				//Not authorized message
+			} else if (!isAuthorized) {
+				return (
+					<React.Fragment>
+						{/* Base Layout - Shared component which has Header */}
+						<BaseLayout {...this.props.auth}>
+							<BasePage>
+								<h1 className="title"> You have to be authorized to access this content</h1>
+							</BasePage>
+						</BaseLayout>
+					</React.Fragment>
+				);
+			} else {
+				return <Component {...this.props} />;
 			}
 		}
 
@@ -36,4 +67,3 @@ export default function(Component) {
 			return this.renderSecretPage();
 		}
 	};
-}
