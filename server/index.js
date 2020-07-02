@@ -47,8 +47,13 @@ app
 	.then(() => {
 		const server = express();
 
-		//Route handler with Middleware
+		//Route handler with Middleware validity of the token
 		server.get('/api/v1/secret', authService.checkJWT, (req, res) => {
+			return res.json(secretData);
+		});
+
+		//Route handler with Middleware request user
+		server.get('/api/v1/onlysiteowner', authService.checkJWT, authService.checkRole('siteOwner'), (req, res) => {
 			return res.json(secretData);
 		});
 
