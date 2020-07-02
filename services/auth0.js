@@ -26,7 +26,11 @@ class Auth0 {
 			this.auth0.parseHash((err, authResult) => {
 				if (authResult && authResult.accessToken && authResult.idToken) {
 					this.setSession(authResult);
+<<<<<<< HEAD
 					console.log("master");
+=======
+					console.log("refracture");
+>>>>>>> refracture
 					resolve();
 				} else if (err) {
 					reject(err);
