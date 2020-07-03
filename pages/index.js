@@ -72,7 +72,7 @@ class Index extends React.Component {
 														Have a look at my portfolio and job history.
 													</div>
 												</div>
-												<img className="image shadowed" src="/static/images/display-1.png" />
+												<img className="image shadowed" src="/public/images/display-1.png" />
 												{/* Shadow for PNG image */}
 												<svg height="0" width="0">
 													<filter id="drop-shadow">

@@ -6,9 +6,9 @@ import auth0 from '../../services/auth0';
 
 //Basic Link Layout, that defines a route, and a title, and returns a JSX element of a Link with a Title
 const BsNavLink = (props) => {
-	const { route, title } = props;
+	const { route, title } = props; 
 	return (
-		<Link href={route}>
+		<Link href={route}> 
 			<a className="nav-link port-navbar-link">{title}</a>
 		</Link>
 	);
