@@ -6,9 +6,9 @@ import auth0 from '../../services/auth0';
 
 //Basic Link Layout, that defines a route, and a title, and returns a JSX element of a Link with a Title
 const BsNavLink = (props) => {
-	const { route, title } = props; 
+	const { route, title } = props;
 	return (
-		<Link href={route}> 
+		<Link href={route}>
 			<a className="nav-link port-navbar-link">{title}</a>
 		</Link>
 	);
@@ -41,16 +41,16 @@ const NavBar = (props) => {
 	return (
 		<React.Fragment>
 			{/* Simple Colapsable Bootstrap Navbar which is set to expand on medium screens */}
-			<Navbar className="port-navbar port-default absolute" color="transparent" light expand="md">
+			<Navbar className="port-navbar port-default absolute" color="transparent" dark expand="lg">
 				{/* Title, Logo is placed here */}
-				<NavbarBrand className="port-navbar-brand" href="/">
-					Artiom Tofan
-				</NavbarBrand>
+				<Link href="/">
+					<a className="navbar-brand port-navbar-brand">Artiom Tofan</a>
+				</Link>
 				{/* Toggler for the Navbar when it shows on the medium screen */}
 				<NavbarToggler onClick={toggle} />
-				<Collapse isOpen={isOpen} navbar className="float-right">
+				<Collapse isOpen={isOpen} navbar className="float-right text-right">
 					{/* All the content to the Left */}
-					<Nav className="ml-auto" navbar>
+					<Nav className="mr-auto" navbar>
 						<NavItem className="port-navbar-item">
 							{/* Navlinks we defined in this component */}
 							<BsNavLink route="/" title="Home" />
@@ -67,6 +67,8 @@ const NavBar = (props) => {
 						<NavItem className="port-navbar-item">
 							<BsNavLink route="/cv" title="CV" />
 						</NavItem>
+					</Nav>
+					<Nav className="ml-auto" navbar>
 						{/* Checking if the user is uthenticated, if not the login button is shown */}
 						{!isAuthenticated && (
 							<NavItem className="port-navbar-item">

@@ -2,7 +2,7 @@ import React from 'react';
 import BaseLayout from '../components/layouts/BaseLayout';
 import BasePage from '../components/BasePage';
 // import Link from 'next/link';
-import { Link } from '../routes'
+import { Link } from '../routes';
 //Duplicating the axios use from the Index, its better to have it somewhere centralized where we can use it
 import axios from 'axios';
 
@@ -31,7 +31,7 @@ class Portfolios extends React.Component {
 		return posts.map((justOnePost, index) => {
 			return (
 				//Adding an unique key for every single post in our case its index of each iterated element
-				<li key={index}>
+				<li className="portfolio_links" key={index}>
 					{/* Adding a link to the data independently and adding a query parameter to it */}
 					<Link route={`/portfolio/${justOnePost.id}`}>
 						<a className="">{justOnePost.title}</a>

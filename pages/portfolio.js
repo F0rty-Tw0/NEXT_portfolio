@@ -22,7 +22,6 @@ class Portfolio extends React.Component {
 			console.log(error);
 		}
 
-		console.log('getInitialProps');
 		//Should always return an object this time its a post
 		return { post };
 	}
@@ -36,7 +35,7 @@ class Portfolio extends React.Component {
 		return (
 			<BaseLayout>
 				<BasePage>
-					<h1 className="title">{post.title}</h1>
+					<h1>{post.title}</h1>
 					<h2>{post.body}</h2>
 				</BasePage>
 			</BaseLayout>

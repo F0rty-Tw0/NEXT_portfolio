@@ -4,8 +4,7 @@ import BaseLayout from '../components/layouts/BaseLayout';
 import Typed from 'react-typed';
 //Bootstrap Element - Container, Row, Col from Reactstrap
 import { Container, Row, Col } from 'reactstrap';
-//React Particles (https://github.com/Wufe/react-particles-js) are not that costumizable, have to think switching to https://github.com/matteobruni/tsparticles
-import Particles from 'react-particles-js';
+
 
 //Calls everything what is included in SuperComponent
 class Index extends React.Component {
@@ -30,36 +29,7 @@ class Index extends React.Component {
 			//React.Fragment is used instead of <div /> to hide it from source
 			<React.Fragment>
 				<BaseLayout {...this.props.auth} className="cover">
-					<div className="main-section">
-						{/* Particles effect on the background */}
-						<Particles
-							id="particles"
-							params={{
-								particles: {
-									number: {
-										value: 100
-									},
-									size: {
-										value: 3
-									}
-								},
-								interactivity: {
-									events: {
-										onhover: {
-											enable: true,
-											mode: 'bubble'
-										}
-									},
-									modes: {
-										bubble: {
-											opacity: 0.1,
-											distance: 100,
-											duration: 2
-										}
-									}
-								}
-							}}
-						/>
+					<div className="main-section">						
 						<Container>
 							<Row>
 								<Col md="6">
@@ -72,7 +42,7 @@ class Index extends React.Component {
 														Have a look at my portfolio and job history.
 													</div>
 												</div>
-												<img className="image shadowed" src="/public/images/display-1.png" />
+												<img className="image shadowed" src="/images/display-1.png" />
 												{/* Shadow for PNG image */}
 												<svg height="0" width="0">
 													<filter id="drop-shadow">
