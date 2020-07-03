@@ -1,13 +1,13 @@
-import App from 'next/app';
+import React from 'react';
 import auth0 from '../services/auth0';
 //Bootstrap CSS (this is first)
 import 'bootstrap/dist/css/bootstrap.min.css';
 //Styling CSS (this is 2nd so it overrides Bootstrap CSS and we don't need !important)
 import './../styles/main.scss';
-import { Authentication } from 'auth0-js';
+// import { Authentication } from 'auth0-js';
 
-export default class MyApp extends App {
-	static async getInitialProps({ Component, router, ctx }) {
+export default class App extends React.Component {
+	static async getInitialProps({ Component, ctx }) {
 		let pageProps = {};
 		//Ternary operator to check if the process is in browser then send client auth or server auth
 		const user = process.browser ? await auth0.clientAuth() : await auth0.serverAuth(ctx.req);
@@ -21,7 +21,7 @@ export default class MyApp extends App {
 
 		// Checking the Authentication of user, and doing for better syntax a double negation on user to make it true
 		const auth = { user, isAuthenticated: !!user };
-	
+
 		// let isAuthenticated = false;
 		// if (user) {
 		// 	isAuthenticated = true;

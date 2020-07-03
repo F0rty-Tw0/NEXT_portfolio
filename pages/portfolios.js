@@ -1,7 +1,8 @@
 import React from 'react';
 import BaseLayout from '../components/layouts/BaseLayout';
 import BasePage from '../components/BasePage';
-import Link from 'next/link';
+// import Link from 'next/link';
+import { Link } from '../routes';
 //Duplicating the axios use from the Index, its better to have it somewhere centralized where we can use it
 import axios from 'axios';
 
@@ -17,10 +18,9 @@ class Portfolios extends React.Component {
 			// console.log('Showing awaited Data from axios');
 			// console.log(posts);
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 		}
 
-		console.log('getInitialProps');
 		//Should always return an object
 		//Showing the spliced posts from 0 index until 10 index
 		return { posts: posts.splice(0, 10) };
@@ -31,9 +31,9 @@ class Portfolios extends React.Component {
 		return posts.map((justOnePost, index) => {
 			return (
 				//Adding an unique key for every single post in our case its index of each iterated element
-				<li key={index}>
+				<li className="portfolio_links" key={index}>
 					{/* Adding a link to the data independently and adding a query parameter to it */}
-					<Link as={`/portfolioDetail/${justOnePost.id}`} href="/portfolioDetail/[id]">
+					<Link route={`/portfolio/${justOnePost.id}`}>
 						<a className="">{justOnePost.title}</a>
 					</Link>
 				</li>
@@ -42,8 +42,6 @@ class Portfolios extends React.Component {
 	}
 
 	render() {
-		//Consoling the posts data
-		console.log(this.props);
 		//Getting destructurized posts from props
 		const { posts } = this.props;
 		return (
