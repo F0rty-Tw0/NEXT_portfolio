@@ -1,11 +1,11 @@
 import BaseLayout from '@/components/layouts/BaseLayout';
 import BasePage from '@/components/BasePage';
 import Link from 'next/link';
-import { useGetPosts } from '@/actions';
+import { useGetData } from '@/actions';
 
 const Portfolios = (props) => {
-	//Getting destructurized posts from props
-	const { posts, error, loading } = useGetPosts();
+	//Getting data, error, and loading state from useGetData( and our api link)
+	const { data, error, loading } = useGetData('/api/v1/posts');
 
 	//A function to iterate(loop) between posts to display them all
 	const renderPosts = (posts) =>
@@ -23,13 +23,13 @@ const Portfolios = (props) => {
 	return (
 		<BaseLayout {...props.auth}>
 			<BasePage>
-				<h1 className="title"> This is a Portfolios page(Class Component)</h1>
+				<h1 className="title"> This is a Portfolios page</h1>
 				{/* Displaying the loading state */}
 				{loading && <p>Loading Data</p>}
-				{/* Getting the value from posts, and showing them on page */}
-				{posts && <ul>{renderPosts(posts)}</ul>}
 				{/* Displaying an error message if there are some problems loading the data */}
 				{error && <div className="alert alert-danger w-25">{error.message}</div>}
+				{/* Getting the value from posts, and showing them on page */}
+				{data && <ul>{renderPosts(data)}</ul>}
 			</BasePage>
 		</BaseLayout>
 	);

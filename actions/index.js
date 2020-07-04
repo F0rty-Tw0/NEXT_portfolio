@@ -19,10 +19,10 @@ export const getSecretData = async (req) => {
 	return await axios.get(url, setAuthHeader(req)).then((response) => response.data);
 };
 
-//Function to use our get posts function
-export const useGetPosts = () => {
-	//Defining the posts as initial value as array so it can be modified later
-	const [ posts, setPosts ] = useState([]);
+//Function to use our get Data function
+export const useGetData = (url) => {
+	//Defining the data as initial value as array so it can be modified later
+	const [ data, setData ] = useState();
 	//Defining the Error as state
 	const [ error, setError ] = useState();
 	//Defining the loading state
@@ -31,8 +31,9 @@ export const useGetPosts = () => {
 	//Function to retrive our data
 	useEffect(() => {
 		//Getting data from an API using fetch then storing it to a data as a JSON
-		async function getPosts() {
-			const res = await fetch('/api/v1/posts');
+		async function fetchData() {
+			//Fetching data from an url defined in useGetData
+			const res = await fetch(url);
 			const result = await res.json();
 			//If we cannot get data, we get an error
 			if (res.status !== 200) {
@@ -40,16 +41,16 @@ export const useGetPosts = () => {
 				//Else we get the data
 			} else {
 				//Seting data to a state
-				setPosts(result);
+				setData(result);
 			}
 			//We are not loading any data, then loading gonna be false
 			setLoading(false);
 		}
-		getPosts();
-	}, []);
+		url && fetchData();
+	}, [url]);
 
-	//Returning the state as an opbject defined as posts, or an error //Should always return an object
-	return { posts, error, loading };
+	//Returning the state as an object defined as data, or an error, or loading //Should always return an object
+	return { data, error, loading };
 };
 
 // export const getSecretDataServer = async (req) => {
