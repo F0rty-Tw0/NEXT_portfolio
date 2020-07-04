@@ -25,6 +25,8 @@ export const useGetPosts = () => {
 	const [ posts, setPosts ] = useState([]);
 	//Defining the Error as state
 	const [ error, setError ] = useState();
+	//Defining the loading state
+	const [ loading, setLoading ] = useState(true);
 
 	//Function to retrive our data
 	useEffect(() => {
@@ -40,12 +42,14 @@ export const useGetPosts = () => {
 				//Seting data to a state
 				setPosts(result);
 			}
+			//We are not loading any data, then loading gonna be false
+			setLoading(false);
 		}
 		getPosts();
 	}, []);
 
 	//Returning the state as an opbject defined as posts, or an error //Should always return an object
-	return { posts, error };
+	return { posts, error, loading };
 };
 
 // export const getSecretDataServer = async (req) => {
