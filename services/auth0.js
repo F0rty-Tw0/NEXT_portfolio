@@ -2,7 +2,7 @@ import auth0 from 'auth0-js';
 import Cookies from 'js-cookie';
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
-import { getCookieFromReq } from '../helpers/utils';
+import { getCookieFromReq } from '@/helpers/utils';
 
 class Auth0 {
 	//Creating a constructor to intialize this steps

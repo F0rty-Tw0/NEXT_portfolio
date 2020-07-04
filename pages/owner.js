@@ -1,8 +1,8 @@
 import React from 'react';
-import BaseLayout from '../components/layouts/BaseLayout';
-import BasePage from '../components/BasePage';
+import BaseLayout from '@/components/layouts/BaseLayout';
+import BasePage from '@/components/BasePage';
 
-import withAuth from '../components/highOrderComponents/withAuth';
+import withAuth from '@/components/highOrderComponents/withAuth';
 class Owner extends React.Component {
 	render() {
 		return (

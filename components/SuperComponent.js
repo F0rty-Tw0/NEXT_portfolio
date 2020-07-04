@@ -1,5 +1,5 @@
 import React from 'react';
-import BaseLayout from '../components/layouts/BaseLayout';
+import BaseLayout from '@/components/layouts/BaseLayout';
 
 class SupperComponent extends React.Component {
     //Passing props to every constructor

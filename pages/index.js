@@ -1,4 +1,4 @@
-import BaseLayout from '../components/layouts/BaseLayout';
+import BaseLayout from '@/components/layouts/BaseLayout';
 //Typed for auto typing text (https://github.com/mattboldt/typed.js)
 import Typed from 'react-typed';
 //Bootstrap Element - Container, Row, Col from Reactstrap

@@ -1,6 +1,6 @@
 import React from 'react';
-import BaseLayout from '../layouts/BaseLayout';
-import BasePage from '../BasePage';
+import BaseLayout from '@/components/layouts/BaseLayout';
+import BasePage from '@/components/BasePage';
 
 //Our webpage
 const namespace = 'http://127.0.0.1:3000/';

@@ -1,6 +1,6 @@
 import React from 'react';
-import BaseLayout from '../components/layouts/BaseLayout';
-import BasePage from '../components/BasePage';
+import BaseLayout from '@/components/layouts/BaseLayout';
+import BasePage from '@/components/BasePage';
 //Importing router to use fetched Data from other Component
 import { withRouter } from 'next/router';
 //Duplicating the axios use from the Index, its better to have it somewhere centralized where we can use it

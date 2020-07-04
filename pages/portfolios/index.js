@@ -1,11 +1,18 @@
-import BaseLayout from '../components/layouts/BaseLayout';
-import BasePage from '../components/BasePage';
-// import Link from 'next/link';
-import { Link } from '../routes';
+import BaseLayout from '@/components/layouts/BaseLayout';
+import BasePage from '@/components/BasePage';
+import { useEffect } from 'react';
+import Link from 'next/link';
 //Duplicating the axios use from the Index, its better to have it somewhere centralized where we can use it
 import axios from 'axios';
 
 const Portfolios = (props) => {
+	useEffect(() => {
+		async function getPosts() {
+			const res = await fetch('/api/v1/posts');
+			const data = await res.json();			
+		}
+		getPosts();
+	}, []);
 	//Getting destructurized posts from props
 	const { posts } = props;
 	//A function to iterate(loop) between posts to display them all
@@ -14,7 +21,7 @@ const Portfolios = (props) => {
 			return (
 				//Adding an unique key for every single post in our case its index of each iterated element
 				<li className="portfolio_links" key={index}>
-					<Link route={`/portfolio/${justOnePost.id}`}>
+					<Link as={`/portfolios/${justOnePost.id}`} href="/portfolios/[id]">
 						<a className="">{justOnePost.title}</a>
 					</Link>
 				</li>

@@ -1,4 +1,4 @@
-import NavBar from '../shared/NavBar';
+import NavBar from '@/components/shared/NavBar';
 //React Particles (https://github.com/Wufe/react-particles-js) are not that costumizable, have to think switching to https://github.com/matteobruni/tsparticles
 import Particles from 'react-particles-js';
 const BaseLayout = (props) => {
