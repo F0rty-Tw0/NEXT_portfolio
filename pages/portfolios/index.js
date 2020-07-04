@@ -1,11 +1,11 @@
 import BaseLayout from '@/components/layouts/BaseLayout';
 import BasePage from '@/components/BasePage';
+import { useGetPosts } from '@/actions';
 import Link from 'next/link';
-import { useGetData } from '@/actions';
 
 const Portfolios = (props) => {
-	//Getting data, error, and loading state from useGetData( and our api link)
-	const { data, error, loading } = useGetData('/api/v1/posts');
+	//Getting data, error, and loading state from SWR( wich is defined in useGetPosts )
+	const { data, error, loading } = useGetPosts();
 
 	//A function to iterate(loop) between posts to display them all
 	const renderPosts = (posts) =>

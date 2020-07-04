@@ -1,13 +1,12 @@
 import BaseLayout from '@/components/layouts/BaseLayout';
 import BasePage from '@/components/BasePage';
-import { useGetData } from '@/actions';
+import { useGetPostsById } from '@/actions';
 import { useRouter } from 'next/router';
 
 const Portfolio = () => {
 	const router = useRouter();
-	//Getting data, error, and loading state from useGetData( and our api link)
-	const { data: portfolio, error, loading } = useGetData(router.query.id ? `/api/v1/posts/${router.query.id}` : null);
-	debugger;
+	//Getting data, error, and loading state from useGetPostsById( and our api link)
+	const { data: portfolio, error, loading } = useGetPostsById(router.query.id);
 	return (
 		<BaseLayout>
 			<BasePage>
