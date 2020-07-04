@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
 import { getCookieFromReq } from '../helpers/utils';
 
 const setAuthHeader = (req) => {
@@ -14,9 +15,37 @@ const setAuthHeader = (req) => {
 
 //Getting data from our API and checking for authorization
 export const getSecretData = async (req) => {
-    
 	const url = 'http://127.0.0.1:3000/api/v1/secret';
 	return await axios.get(url, setAuthHeader(req)).then((response) => response.data);
+};
+
+//Function to use our get posts function
+export const useGetPosts = () => {
+	//Defining the posts as initial value as array so it can be modified later
+	const [ posts, setPosts ] = useState([]);
+	//Defining the Error as state
+	const [ error, setError ] = useState();
+
+	//Function to retrive our data
+	useEffect(() => {
+		//Getting data from an API using fetch then storing it to a data as a JSON
+		async function getPosts() {
+			const res = await fetch('/api/v1/posts');
+			const result = await res.json();
+			//If we cannot get data, we get an error
+			if (res.status !== 200) {
+				setError(result);
+				//Else we get the data
+			} else {
+				//Seting data to a state
+				setPosts(result);
+			}
+		}
+		getPosts();
+	}, []);
+
+	//Returning the state as an opbject defined as posts, or an error //Should always return an object
+	return { posts, error };
 };
 
 // export const getSecretDataServer = async (req) => {
