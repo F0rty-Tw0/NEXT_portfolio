@@ -2,7 +2,6 @@ import NavBar from '@/components/shared/NavBar';
 //React Particles (https://github.com/Wufe/react-particles-js) are not that costumizable, have to think switching to https://github.com/matteobruni/tsparticles
 import Particles from 'react-particles-js';
 
-//Calls everything what is included in SuperComponent
 const BaseLayout = (props) => {
 	//Retrieving user, loading, className, and children from porps
 	const { className, children, user, loading } = props;

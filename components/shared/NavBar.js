@@ -54,6 +54,9 @@ const NavBar = ({ user, loading }) => {
 						<NavItem className="port-navbar-item">
 							<BsNavLink route="/cv" title="CV" />
 						</NavItem>
+						<NavItem className="port-navbar-item">
+							<BsNavLink route="/secret" title="Secret" />
+						</NavItem>
 					</Nav>
 					{/* NavBar for login, logout, and user name with */}
 					<Nav className="ml-auto" navbar>
