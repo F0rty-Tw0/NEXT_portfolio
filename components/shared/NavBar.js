@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem } from 'reactstrap';
 
-import auth0 from '@/services/auth0';
+// import auth0 from '@/services/auth0';
 
 //Basic Link Layout, that defines a route, and a title, and returns a JSX element of a Link with a Title
 const BsNavLink = (props) => {
@@ -15,21 +15,19 @@ const BsNavLink = (props) => {
 };
 
 //Login Button layout
-const Login = () => {
-	return (
-		<span onClick={auth0.login} className="nav-link port-navbar-link clickable">
-			Login
-		</span>
-	);
-};
+// const Login = () => {
+// 	return (
+// 		<span onClick={auth0.login} className="nav-link port-navbar-link clickable">
+// 			Login
+// 		</span>
+// 	);
+// };
+
+const Login = () => <BsNavLink route="/api/v1/login" title="Login" />;
 
 //Logout Button layout
 const Logout = () => {
-	return (
-		<span onClick={auth0.logout} className="nav-link port-navbar-link clickable">
-			Logout
-		</span>
-	);
+	return <span className="nav-link port-navbar-link clickable">Logout</span>;
 };
 
 const NavBar = (props) => {
@@ -37,7 +35,7 @@ const NavBar = (props) => {
 	const [ isOpen, setIsOpen ] = useState(false);
 	const toggle = () => setIsOpen(!isOpen);
 
-	const { isAuthenticated, user } = props;
+	// const { isAuthenticated, user } = props;
 	return (
 		<React.Fragment>
 			{/* Simple Colapsable Bootstrap Navbar which is set to expand on medium screens */}
@@ -70,23 +68,23 @@ const NavBar = (props) => {
 					</Nav>
 					<Nav className="ml-auto" navbar>
 						{/* Checking if the user is uthenticated, if not the login button is shown */}
-						{!isAuthenticated && (
-							<NavItem className="port-navbar-item">
-								<Login />
-							</NavItem>
-						)}
+						{/* {!isAuthenticated && ( */}
+						<NavItem className="port-navbar-item">
+							<Login />
+						</NavItem>
+						{/* )} */}
 						{/* Checking if the user is uthenticated, if yes the Logout button is shown */}
-						{isAuthenticated && (
-							<NavItem className="port-navbar-item">
-								<Logout />
-							</NavItem>
-						)}
+						{/* {isAuthenticated && ( */}
+						<NavItem className="port-navbar-item">
+							<Logout />
+						</NavItem>
+						{/* )} */}
 
-						{isAuthenticated && (
-							<NavItem className="port-navbar-item">
-								<span className="nav-link port-navbar-link">{user.given_name}</span>
-							</NavItem>
-						)}
+						{/* {isAuthenticated && ( */}
+						<NavItem className="port-navbar-item">
+							{/* <span className="nav-link port-navbar-link">{user.given_name}</span> */}
+						</NavItem>
+						{/* )} */}
 					</Nav>
 				</Collapse>
 			</Navbar>

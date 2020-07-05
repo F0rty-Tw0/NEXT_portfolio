@@ -16,7 +16,7 @@ const Index = (props) => {
 		'Chars &times; &copy;'
 	];
 
-	const { isAuthenticated, user } = props.auth;
+	// const { isAuthenticated, user } = props.auth;
 	return (
 		//React.Fragment is used instead of <div /> to hide it from source
 		<React.Fragment>
@@ -56,11 +56,9 @@ const Index = (props) => {
 								<div className="display-welcome-text">
 									<h1>
 										{/* If authenticated then displaying the user name */}
-										{isAuthenticated && (
-											<span>
-												<b>{user.given_name} </b>
-											</span>
-										)}
+										{/* {isAuthenticated && ( */}
+										<span>{/* <b>{user.given_name} </b> */}</span>
+										{/* )} */}
 										Fusce convallis accumsan erat sit amet ornare. Mauris in leo sed massa dignissim
 										ullamcorper. Pellentesque a maximus justo, sed maximus augue. Curabitur eleifend
 										massa sed imperdiet bibendum. Vivamus maximus dolor dui, ac vestibulum nisi
