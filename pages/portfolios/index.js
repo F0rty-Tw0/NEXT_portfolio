@@ -1,11 +1,14 @@
 import BaseLayout from '@/components/layouts/BaseLayout';
 import BasePage from '@/components/BasePage';
 import { useGetPosts } from '@/actions';
+import { useGetUser } from '@/actions/user';
 import Link from 'next/link';
 
-const Portfolios = (props) => {
+const Portfolios = () => {
 	//Getting data, error, and loading state from SWR( wich is defined in useGetPosts )
 	const { data, error, loading } = useGetPosts();
+	//Retrieving data as dataUser, and loading state as loadingUser from useGetUser
+	const { data: dataUser, loading: loadingUser } = useGetUser();
 
 	//A function to iterate(loop) between posts to display them all
 	const renderPosts = (posts) =>
@@ -19,9 +22,8 @@ const Portfolios = (props) => {
 				</li>
 			);
 		});
-
 	return (
-		<BaseLayout {...props.auth}>
+		<BaseLayout user={dataUser} loading={loadingUser}>
 			<BasePage>
 				<h1 className="title"> This is a Portfolios page</h1>
 				{/* Displaying the loading state */}

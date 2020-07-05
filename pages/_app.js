@@ -9,6 +9,26 @@ import '@/styles/main.scss';
 const App = ({ Component, pageProps }) => <Component {...pageProps} />;
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // export default class App extends React.Component {
 // 	static async getInitialProps({ Component, ctx }) {
 // 		let pageProps = {};

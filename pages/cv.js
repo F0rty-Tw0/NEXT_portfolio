@@ -1,11 +1,16 @@
 import BaseLayout from '@/components/layouts/BaseLayout';
 import BasePage from '@/components/BasePage';
+import { useGetUser } from '@/actions/user';
 
-const CV = (props) => {
+const CV = () => {
+	//Retrieving data, and loading state from useGetUser
+	const { data, loading } = useGetUser();
+
 	return (
+		//React.Fragment is used instead of <div> or <> to hide it from source
 		<React.Fragment>
-			{/* Base Layout - Shared component which has Header */}
-			<BaseLayout {...props.auth}>
+			{/* Base Layout - Shared component which has user data and loading state */}
+			<BaseLayout user={data} loading={loading}>
 				<BasePage>
 					<h1 className="title"> This is a CV page</h1>
 				</BasePage>

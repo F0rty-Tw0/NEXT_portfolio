@@ -3,9 +3,13 @@ import BaseLayout from '@/components/layouts/BaseLayout';
 import Typed from 'react-typed';
 //Bootstrap Element - Container, Row, Col from Reactstrap
 import { Container, Row, Col } from 'reactstrap';
+import { useGetUser } from '@/actions/user';
 
 //Calls everything what is included in SuperComponent
-const Index = (props) => {
+const Index = () => {
+	//Retrieving data, and loading state from useGetUser
+	const { data, loading } = useGetUser();
+
 	//Text for Typed.js
 	const roles = [
 		'My strings are: <i>strings</i> with',
@@ -16,11 +20,11 @@ const Index = (props) => {
 		'Chars &times; &copy;'
 	];
 
-	// const { isAuthenticated, user } = props.auth;
 	return (
-		//React.Fragment is used instead of <div /> to hide it from source
+		//React.Fragment is used instead of <div> or <> to hide it from source
 		<React.Fragment>
-			<BaseLayout {...props.auth} className="cover">
+			{/* Base Layout - Shared component which has user data and loading state */}
+			<BaseLayout user={data} loading={loading} className="cover">
 				<div className="main-section">
 					<Container>
 						<Row>

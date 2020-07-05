@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem } from 'reactstrap';
 
-// import auth0 from '@/services/auth0';
-
 //Basic Link Layout, that defines a route, and a title, and returns a JSX element of a Link with a Title
 const BsNavLink = (props) => {
 	const { route, title } = props;
@@ -15,28 +13,19 @@ const BsNavLink = (props) => {
 };
 
 //Login Button layout
-// const Login = () => {
-// 	return (
-// 		<span onClick={auth0.login} className="nav-link port-navbar-link clickable">
-// 			Login
-// 		</span>
-// 	);
-// };
-
 const Login = () => <BsNavLink route="/api/v1/login" title="Login" />;
 
 //Logout Button layout
-const Logout = () => {
-	return <span className="nav-link port-navbar-link clickable">Logout</span>;
-};
+const Logout = () => <BsNavLink route="/api/v1/logout" title="Logout" />;
 
-const NavBar = (props) => {
+// Base NavBar - which will be a shared component -  which has user data and loading state
+const NavBar = ({ user, loading }) => {
 	//Default Reactstrap toogle function which sets true or false depending on the onClick event
 	const [ isOpen, setIsOpen ] = useState(false);
 	const toggle = () => setIsOpen(!isOpen);
 
-	// const { isAuthenticated, user } = props;
 	return (
+		//React.Fragment is used instead of <div> or <> to hide it from source
 		<React.Fragment>
 			{/* Simple Colapsable Bootstrap Navbar which is set to expand on medium screens */}
 			<Navbar className="port-navbar port-default absolute" color="transparent" dark expand="lg">
@@ -66,19 +55,24 @@ const NavBar = (props) => {
 							<BsNavLink route="/cv" title="CV" />
 						</NavItem>
 					</Nav>
+					{/* NavBar for login, logout, and user name with */}
 					<Nav className="ml-auto" navbar>
-						{/* Checking if the user is uthenticated, if not the login button is shown */}
-						{/* {!isAuthenticated && ( */}
-						<NavItem className="port-navbar-item">
-							<Login />
-						</NavItem>
-						{/* )} */}
-						{/* Checking if the user is uthenticated, if yes the Logout button is shown */}
-						{/* {isAuthenticated && ( */}
-						<NavItem className="port-navbar-item">
-							<Logout />
-						</NavItem>
-						{/* )} */}
+						{/* Checking if we have an user we show logout, if not the login button is shown */}
+						{!loading && (
+							//React.Fragment is used instead of <div> or <> to hide it from source
+							<React.Fragment>
+								{user && (
+									<NavItem className="port-navbar-item">
+										<Logout />
+									</NavItem>
+								)}
+								{!user && (
+									<NavItem className="port-navbar-item">
+										<Login />
+									</NavItem>
+								)}
+							</React.Fragment>
+						)}
 
 						{/* {isAuthenticated && ( */}
 						<NavItem className="port-navbar-item">

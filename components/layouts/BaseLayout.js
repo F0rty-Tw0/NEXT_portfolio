@@ -1,12 +1,18 @@
 import NavBar from '@/components/shared/NavBar';
 //React Particles (https://github.com/Wufe/react-particles-js) are not that costumizable, have to think switching to https://github.com/matteobruni/tsparticles
 import Particles from 'react-particles-js';
+
+//Calls everything what is included in SuperComponent
 const BaseLayout = (props) => {
-	const { className, children, isAuthenticated, user } = props;
+	//Retrieving user, loading, className, and children from porps
+	const { className, children, user, loading } = props;
+
 	return (
+		//React.Fragment is used instead of <div> or <> to hide it from source
 		<React.Fragment>
 			<div className="layout-container">
-				<NavBar isAuthenticated={isAuthenticated} user={user} />
+				{/* Base NavBar - Shared component which has user data and loading state */}
+				<NavBar user={user} loading={loading} />
 				<main className={`cover ${className}`}>
 					{/* Particles effect on the background */}
 					<Particles
