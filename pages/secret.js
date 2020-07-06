@@ -2,7 +2,7 @@ import BaseLayout from '@/components/layouts/BaseLayout';
 import BasePage from '@/components/BasePage';
 import { useGetUser } from '@/actions/user';
 import Redirect from '@/components/shared/Redirect';
-
+import withAuth from '@/hoc/withAuth';
 const Secret = () => {
 	//Retrieving data, and loading state from useGetUser
 	const { data: user, loading: loadingUser } = useGetUser();
@@ -24,11 +24,12 @@ const Secret = () => {
 				{/* Base Layout - Shared component which has user data and loading user state */}
 				<BaseLayout user={user} loading={loadingUser}>
 					<BasePage className="about-page">
-						<h1 className="title"> This is a Secret page</h1>
+						<h1 className="title"> This is a Secret page </h1>
 					</BasePage>
 				</BaseLayout>
 			</React.Fragment>
 		);
 	}
 };
-export default Secret;
+
+export default withAuth(Secret);
