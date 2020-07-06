@@ -1,13 +1,11 @@
 import BaseLayout from '@/components/layouts/BaseLayout';
 import BasePage from '@/components/BasePage';
 import { useGetUser } from '@/actions/user';
-import { useRouter } from 'next/router';
+import Redirect from '@/components/shared/Redirect';
 
 const Secret = () => {
 	//Retrieving data, and loading state from useGetUser
 	const { data: user, loading: loadingUser } = useGetUser();
-
-	const router = useRouter();
 
 	//If the user is loading we show this <p> content
 	if (loadingUser) {
@@ -16,8 +14,8 @@ const Secret = () => {
 
 	//If there is no user we redirect to login page
 	if (!user) {
-		router.push('/api/v1/login');
-		return null;
+		//Redirect component
+		return <Redirect to="/api/v1/login" />;
 		//Else we show this content
 	} else {
 		return (
