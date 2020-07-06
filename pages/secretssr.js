@@ -1,8 +1,9 @@
 import BaseLayout from '@/components/layouts/BaseLayout';
 import BasePage from '@/components/BasePage';
-import auth0 from '@/utils/auth0';
+import { authorizeUser, withAuth } from '@/utils/auth0';
 
-const SecretSSR = ({ user }) => {
+const SecretSSR = ({ user, title }) => {
+	debugger;
 	return (
 		//React.Fragment is used instead of <div> or <> to hide it from source
 		<React.Fragment>
@@ -10,6 +11,7 @@ const SecretSSR = ({ user }) => {
 			<BaseLayout user={user} loading={false}>
 				<BasePage className="about-page">
 					<h1 className="title"> This is a Secret - {user && user.given_name} </h1>
+					<h2> {title}</h2>
 				</BasePage>
 			</BaseLayout>
 		</React.Fragment>
@@ -17,24 +19,27 @@ const SecretSSR = ({ user }) => {
 };
 
 //Server side function - to get data from a server
-export const getServerSideProps = async ({ req, res }) => {
-	//Gettin a session from auth0 function
-	const session = await auth0.getSession(req);
-	//If we have a session or we have a session user
-	if (!session || !session.user) {
-		//Response 302 - which means redirect to 'Location'
-		res.writeHead(302, {
-			Location: '/api/v1/login'
-		});
-		//Notify server that the response should end
-		res.end();
-		//And return an empty props
-		return { props: {} };
-	}
-	//Otherwise we should be authenticated, and we will return the User
-	return {
-		props: { user: session.user }
-	};
+// export const getServerSideProps = async ({ req, res }) => {
+// 	const user = await authorizeUser(req, res);
+// 	//Otherwise we should be authenticated, and we will return the User
+// 	return {
+// 		props: { user }
+// 	};
+// };
+
+//Testing function to simulate server data
+const getTitle = () => {
+	return new Promise((res) => {
+		setTimeout(() => {
+			res({ title: 'My new Title' });
+		}, 500);
+	});
 };
+//Server side function - to get data from a server
+export const getServerSideProps = withAuth(async ({ req, res }, user) => {
+	const title = await getTitle();
+	return title;
+});
+
 //Exporting High Order Component into Secret
 export default SecretSSR;
