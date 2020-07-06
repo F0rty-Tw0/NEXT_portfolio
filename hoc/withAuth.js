@@ -20,7 +20,7 @@ const withAuth = (Component) => {
 		//If there is no user we redirect to login page
 		if (!user) {
 			//Redirect component
-			return <Redirect to="/api/v1/login" />;
+			return <Redirect ssr to="/api/v1/login" />;
 			//Else we show this content
 		} else {
 			//Return the layout
