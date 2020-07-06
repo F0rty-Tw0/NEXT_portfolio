@@ -19,7 +19,7 @@ const Login = () => <BsNavLink route="/api/v1/login" title="Login" />;
 const Logout = () => <BsNavLink route="/api/v1/logout" title="Logout" />;
 
 // Base NavBar - which will be a shared component -  which has user data and loading state
-const NavBar = ({ user, loading }) => {
+const NavBar = ({ user, loadingUser }) => {
 	//Default Reactstrap toogle function which sets true or false depending on the onClick event
 	const [ isOpen, setIsOpen ] = useState(false);
 	const toggle = () => setIsOpen(!isOpen);
@@ -61,7 +61,7 @@ const NavBar = ({ user, loading }) => {
 					{/* NavBar for login, logout, and user name with */}
 					<Nav className="ml-auto" navbar>
 						{/* Checking if we have an user we show logout, if not the login button is shown */}
-						{!loading && (
+						{!loadingUser && (
 							//React.Fragment is used instead of <div> or <> to hide it from source
 							<React.Fragment>
 								{user && (
