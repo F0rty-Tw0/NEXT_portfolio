@@ -18,7 +18,13 @@ const auth0 = initAuth0({
 
 export default auth0;
 
-//Server side authorization function - to get data from a server
+//Serverside Authorization function
+export const isAuthorized = (user, role) => {
+	//Checking if user has metadata which includes the role
+	return user && user[process.env.AUTH0_NAMESPACE + '/roles'].includes(role);
+};
+
+//Server side Authentication function - to get data from a server
 export const authorizeUser = async (req, res) => {
 	//Gettin a session from auth0 function
 	const session = await auth0.getSession(req);
@@ -26,7 +32,7 @@ export const authorizeUser = async (req, res) => {
 	if (!session || !session.user) {
 		//Response 302 - which means redirect to 'Location'
 		res.writeHead(302, {
-			Location: '/api/v1/login'
+			Location: process.env.AUTH0_REDIRECT_LOGIN
 		});
 		//Notify server that the response should end
 		res.end();
@@ -37,17 +43,19 @@ export const authorizeUser = async (req, res) => {
 	return session.user;
 };
 
-export const withAuth = (getData) => async ({ req, res }) => {
+//Client side Authentication function
+export const withAuth = (getData) => (role) => async ({ req, res }) => {
 	//Gettin a session from auth0 function
 	const session = await auth0.getSession(req);
-	//If we have a session or we have a session user
-	if (!session || !session.user) {
+	//If we have a session or we have a session user or we are not authorized
+	if (!session || !session.user || (role && !isAuthorized(session.user, role))) {
 		//Response 302 - which means redirect to 'Location'
-		res.writeHead(302, {
-			Location: '/api/v1/login'
+		debugger
+		res.writeHead(301, {
+			Location: process.env.AUTH0_REDIRECT_LOGIN
 		});
 		//Notify server that the response should end
-		res.end();
+		await res.end();
 		//And return a null user
 		return { props: {} };
 	}

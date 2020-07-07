@@ -1,13 +1,14 @@
 //High Order Component - HOC
 //Simple function that takes a component and returns new component with some extended functionality
-import { useGetUser } from '@/actions/user';
 import Redirect from '@/components/shared/Redirect';
+import { useGetUser } from '@/actions/user';
+import { isAuthorized } from '@/utils/auth0';
 
 //Simplified way to write, not realy friendly readable
 // const withAuth = (Component) => (props) => <Component {...props} />;
 
-//More usual way to write it
-const withAuth = (Component) => {
+//Authorization function with admin check
+const withAuth = (Component) => (role) => {
 	return (props) => {
 		//Retrieving data, and loading state from useGetUser
 		const { data: user, loading: loadingUser } = useGetUser();
@@ -23,6 +24,11 @@ const withAuth = (Component) => {
 			return <Redirect ssr to="/api/v1/login" />;
 			//Else we show this content
 		} else {
+			//Checking if user has metadata which includes the role and if it doesnt then redirect to login page
+			if (role && !isAuthorized(user, role)) {
+				//Redirect component
+				return <Redirect ssr to="/api/v1/login" />;
+			}
 			//Return the layout
 			return <Component user={user} userLoading={loadingUser} {...props} />;
 		}
